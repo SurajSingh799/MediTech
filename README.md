@@ -51,7 +51,7 @@ A modern **Digital Medical System (DMS)** built with an **Angular frontend** and
 1. **Clone the repository**
    ```bash
    git clone <repository-url>
-   cd healthcareblockchain
+   cd project
    ```
 
 2. **Backend Setup**
