@@ -4,10 +4,6 @@
       "NODE_VERSION": "18"
     }
   },
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
-    }
-  ]
+  "installCommand": "npm ci",
+  "buildCommand": "npm run build"
 }
