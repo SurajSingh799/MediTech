@@ -15,8 +15,9 @@ router.patch('/:id/status', protect, patientController.updatePatientStatus);
 // Delete patient (doctors only)
 router.delete('/:id', protect, patientController.deletePatient);
 
-router.post('/patient/medical-record', patientController.addMedicalRecord);
-router.get('/patient/:id', patientController.getPatientById); 
+router.get('/patient/:id', patientController.getPatientById); // MORE SPECIFIC param
+router.post('/patient/medical-record', patientController.addMedicalRecord); // LESS specific path
+
 
 
 module.exports = router; 

@@ -1,7 +1,5 @@
 const User = require('../models/user.model');
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
-const { ethers } = require('ethers');
 
 const generateToken = (user) => {
   return jwt.sign(
@@ -11,54 +9,18 @@ const generateToken = (user) => {
   );
 };
 
-// Utility function to validate Ethereum address
-const isValidEthereumAddress = (address) => {
-  try {
-    return ethers.isAddress(address);
-  } catch (error) {
-    return false;
-  }
-};
-
-// Verify wallet signature for enhanced security
-const verifyWalletSignature = async (address, signature, message) => {
-  try {
-    const recoveredAddress = ethers.verifyMessage(message, signature);
-    return recoveredAddress.toLowerCase() === address.toLowerCase();
-  } catch (error) {
-    console.error('Signature verification failed:', error);
-    return false;
-  }
-};
 
 exports.register = async (req, res) => {
   try {
     console.log('Register request received:', req.body);
     
-    const { name, email, password, role, specialization, license, walletAddress } = req.body;
+    const { name, email, password, role, specialization, license } = req.body;
     
     // Enhanced validation
-    if (!name || !email || !password || !role || !walletAddress) {
+    if (!name || !email || !password || !role ) {
       return res.status(400).json({ 
         success: false, 
-        message: 'Required fields are missing. Name, email, password, role, and wallet address are required.' 
-      });
-    }
-    
-    // Validate wallet address format
-    if (!isValidEthereumAddress(walletAddress)) {
-      return res.status(400).json({
-        success: false,
-        message: 'Invalid Ethereum wallet address format.'
-      });
-    }
-    
-    // Check if wallet address is already registered
-    const existingWallet = await User.findOne({ walletAddress: walletAddress.toLowerCase() });
-    if (existingWallet) {
-      return res.status(400).json({
-        success: false,
-        message: 'This wallet address is already registered to another account.'
+        message: 'Required fields are missing. Name, email, password, role are required.' 
       });
     }
     
@@ -77,7 +39,6 @@ exports.register = async (req, res) => {
       email, 
       password,
       role: role || 'patient',
-      walletAddress: walletAddress.toLowerCase() // Store wallet address in lowercase
     };
     
     // Add doctor-specific fields if role is doctor
@@ -93,7 +54,6 @@ exports.register = async (req, res) => {
       success: true, 
       message: 'User registered successfully',
       userId: user._id,
-      walletConnected: true
     });
     
   } catch (err) {
@@ -106,98 +66,16 @@ exports.register = async (req, res) => {
   }
 };
 
-// Wallet-based authentication endpoint
-exports.walletAuth = async (req, res) => {
-  try {
-    const { walletAddress, signature, message } = req.body;
-    
-    if (!walletAddress) {
-      return res.status(400).json({
-        success: false,
-        message: 'Wallet address is required'
-      });
-    }
-    
-    if (!isValidEthereumAddress(walletAddress)) {
-      return res.status(400).json({
-        success: false,
-        message: 'Invalid wallet address format'
-      });
-    }
-    
-    // Find user with this wallet address
-    const user = await User.findOne({ walletAddress: walletAddress.toLowerCase() });
-    if (!user) {
-      return res.status(404).json({
-        success: false,
-        message: 'No account found with this wallet address. Please register first.'
-      });
-    }
-    
-    // Optional: Verify signature if provided (recommended for production)
-    if (signature && message) {
-      const isValidSignature = await verifyWalletSignature(walletAddress, signature, message);
-      if (!isValidSignature) {
-        return res.status(401).json({
-          success: false,
-          message: 'Invalid wallet signature'
-        });
-      }
-    }
-    
-    // Generate JWT token
-    const token = generateToken(user);
-    
-    let firstName = '', lastName = '';
-    if (user.name) {
-      const nameParts = user.name.split(' ');
-      firstName = nameParts[0] || '';
-      lastName = nameParts.slice(1).join(' ') || '';
-    }
-
-    // Return user data
-    const userData = {
-      _id: user._id,
-      email: user.email,
-      firstName, 
-      lastName,  
-      role: user.role,
-      memberSince: user.createdAt,
-      walletAddress: user.walletAddress
-    };
-    
-    // Add role-specific fields
-    if (user.role === 'doctor') {
-      userData.specialization = user.specialization;
-      userData.license = user.license;
-    }
-    
-    res.json({ 
-      success: true, 
-      token, 
-      user: userData,
-      authMethod: 'wallet'
-    });
-  } catch (err) {
-    console.error('Wallet auth error:', err);
-    res.status(500).json({ 
-      success: false, 
-      message: 'Server error during wallet authentication',
-      error: err.message 
-    });
-  }
-};
-
 exports.login = async (req, res) => {
   try {
     console.log('Login attempt for:', req.body.email);
     
-    const { email, password ,walletAddress} = req.body;
+    const { email, password } = req.body;
     
-    if (!email || !password || !walletAddress) {
+    if (!email || !password ) {
       return res.status(400).json({
         success: false,
-        message: 'Email , password and walletAddress are required'
+        message: 'Email , password  are required'
       });
     }
     
@@ -212,12 +90,6 @@ exports.login = async (req, res) => {
         message: 'Incorrect email or password. Please try again.' 
       });
     }
-          if (user.walletAddress?.toLowerCase() !== walletAddress.toLowerCase()) {
-          return res.status(401).json({
-          success: false,
-          message: 'Wallet address does not match. Please use the correct wallet.'
-        });
-      }
 
     console.log('User found, comparing passwords...');
     
@@ -252,7 +124,6 @@ exports.login = async (req, res) => {
       lastName,  
       role: user.role,
       memberSince: user.createdAt,
-      walletAddress: user.walletAddress 
     };
     
     // Add role-specific fields
@@ -307,7 +178,6 @@ exports.getCurrentUser = async (req, res) => {
       email: user.email,
       role: user.role,
       memberSince: user.createdAt ? user.createdAt.toISOString() : null,
-      walletAddress: user.walletAddress
     };
     
     // Add role-specific fields
@@ -386,7 +256,6 @@ exports.updateUser = async (req, res) => {
       specialization: updatedUser.specialization,
       licenseNumber: updatedUser.license,
       createdAt: updatedUser.createdAt,
-      walletAddress: updatedUser.walletAddress
     };
     
     return res.status(200).json({ 

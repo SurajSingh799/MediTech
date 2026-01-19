@@ -200,15 +200,23 @@ exports.getRecordsByPatient = async (req, res) => {
       .populate('appointment', 'date timeSlot')
       .sort({ recordDate: -1 });
 
+      const recordsWithUrl = records.map(record => {
+      const recordObj = record.toObject();
+      if (recordObj.ipfsHash) {
+        recordObj.fileUrl = `https://gateway.pinata.cloud/ipfs/${recordObj.ipfsHash}`;
+      }
+      return recordObj;
+    });
+
     res.status(200).json({
       success: true,
-      count: records.length,
+      count: recordsWithUrl.length,
       patient: {
         _id: patient._id,
         name: patient.name,
         email: patient.email
       },
-      records
+      records: recordsWithUrl
     });
 
   } catch (error) {

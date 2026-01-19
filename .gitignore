@@ -1,1 +1,9 @@
+# Ignore all node dependencies
 node_modules
+
+# Ignore environment variables
+.env
+
+# Ignore build outputs
+frontend/dist
+backend/dist

@@ -60,3 +60,12 @@ console.log('Connecting to MongoDB URI:', process.env.MONGODB_URI); // Debug pri
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => server.listen(process.env.PORT, () => console.log(`Server running on port ${process.env.PORT}`)))
   .catch(err => console.error('MongoDB connection error:', err)); 
+
+  const path = require('path');
+
+app.use('/app', express.static(path.join(__dirname, 'dist')));
+
+app.use((req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
+

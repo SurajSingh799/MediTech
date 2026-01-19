@@ -7,7 +7,6 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true, minlength: 6, select: false },
   refreshToken: { type: String },
   role: { type: String, enum: ['patient', 'doctor', 'admin'], default: 'patient' },
-  walletAddress : { type: String, required: true ,unique: true,trim: true},
   specialization: { type: String },
   license: { type: String }
 }, { timestamps: true });

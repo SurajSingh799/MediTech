@@ -12,7 +12,6 @@ router.post('/register', authController.register);
 router.post('/login', authController.login);
 router.get('/me', protect, authController.getCurrentUser);
 router.put('/users/:id', protect, authController.updateUser);
-router.post('/wallet-auth', authController.walletAuth);
 
 // Change password
 router.post('/change-password', protect, authController.changePassword);
