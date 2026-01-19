@@ -1,20 +1,19 @@
 
-# MediTech Healthcare Blockchain DMS
+# MediTech Healthcare Management System
 
-A modern **Digital Medical System (DMS)** built with an **Angular frontend** and **Node.js backend**, leveraging **blockchain technology** and **IPFS** for secure and decentralized patient record management.
+A modern **Healtcare Medical System (HMS)** built with an **Angular frontend** and **Node.js backend**  for managing patients, doctors, appointments, and medical records in a secure and scalable way.
 
 ---
 
 ## 🚀 Project Overview
 
-**MediTech** is a healthcare platform that ensures secure, transparent, and decentralized storage of patient medical records using Ethereum blockchain and IPFS. It offers:
-
--✅ Secure user authentication  
--📁 Blockchain-verified patient records  
--🌐 IPFS-based distributed storage  
--🅰️ Modern, responsive UI built with Angular  
--🛡️Role-based access for Doctors, Patients, and Admins
-
+**MediTech** is a healthcare platform designed to digitize and streamline hospital and clinic operations. It provides secure user authentication, role-based access, appointment management, and medical record handling through a centralized system.
+It offers:
+- ✅ Secure user authentication
+- 🧑‍⚕️ Role-based access for Doctors, Patients, and Admins
+- 📅 Appointment booking & management
+- 📁 Medical record management
+- 🅰️ Modern, responsive UI built with Angular
 ---
 
 ## 🛠️ Technology Stack
@@ -30,8 +29,6 @@ A modern **Digital Medical System (DMS)** built with an **Angular frontend** and
 - Express.js  
 - MongoDB  
 - JSON Web Tokens (JWT) for authentication  
-- Ethereum (Sepolia Testnet) for blockchain integration  
-- IPFS (via Pinata) for decentralized storage  
 
 ---
 
@@ -42,7 +39,6 @@ A modern **Digital Medical System (DMS)** built with an **Angular frontend** and
 - npm or yarn
 - Angular CLI
 - MongoDB (optional for production)
-- Metamask (for blockchain interactions)
 
 ---
 
@@ -50,7 +46,7 @@ A modern **Digital Medical System (DMS)** built with an **Angular frontend** and
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/SurajSingh799/MediTech.git
    cd project
    ```
 
@@ -62,14 +58,17 @@ A modern **Digital Medical System (DMS)** built with an **Angular frontend** and
 
 3. **Frontend Setup (Angular)**
    ```bash
-   cd ../front
+   cd ../frontend
    npm install
    ```
 
 4. **Environment Setup**
-   - Create `.env` files in both `backend/` and `frontend-angular/` using the examples provided:
-     - `backend/.env.example`
-     - `frontend-angular/.env.example`
+   Create .env file in backend/:
+   ```bash
+   PORT=3000
+   MONGODB_URI=your_mongodb_connection_string
+   JWT_SECRET=your_jwt_secret
+
 
 ---
 
@@ -78,12 +77,12 @@ A modern **Digital Medical System (DMS)** built with an **Angular frontend** and
 **Start Backend**
 ```bash
 cd backend
-npm run dev
+node server.js
 ```
 
 **Start Frontend (Angular)**
 ```bash
-cd front
+cd frontend
 ng serve
 ```
 
@@ -97,21 +96,23 @@ Visit: `http://localhost:4200`
 ### Authentication
 - Login and registration
 - JWT-based session handling
-- Role-based dashboard redirection
+- Role-based route protection
 
 ### Patient Management
 - Create, update, delete, and view patient profiles
-- Filter and search capabilities
-- Secure, verifiable medical records
+- Search and filter functionality
+- Secure access based on user roles
 
-### Medical Records
-- Files stored on IPFS
-- Record hashes stored on Ethereum
-- Permission-based access for different roles
+### Appointment Management
+- Book appointments
+- View upcoming and past appointments
+- Doctor-wise appointment handling
+  
 
 ### Dashboard
-- Interactive dashboard with statistics and activity logs
-- Quick links to key features
+- Interactive dashboard with statistics
+- Recent activity tracking
+- System status overview
 
 
 
@@ -149,7 +150,12 @@ This project is licensed under the **MIT License** – see the `LICENSE` file fo
 ## 🙏 Acknowledgments
 
 - Angular Material
-- Ethereum (Sepolia)
-- IPFS / Pinata
+- Node.js & Express
+- MongoDB Atlas
+- JWT Authentication
+
+### ✅ Final Note
+
+This project demonstrates a **real-world healthcare management workflow** with secure authentication, clean architecture, and scalable design.
 - MongoDB Atlas
 - JWT & Express
