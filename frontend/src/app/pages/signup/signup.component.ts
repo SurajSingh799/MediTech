@@ -2,7 +2,6 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-import { MatDivider } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { ApiService } from '../../services/api.service';
@@ -13,7 +12,7 @@ import { ApiService } from '../../services/api.service';
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css'],
   standalone: true,
-  imports: [FormsModule, CommonModule, MatIconModule, MatDivider, MatCardModule, MatButtonModule]
+  imports: [FormsModule, CommonModule, MatIconModule,  MatCardModule, MatButtonModule]
 })
 export class SignUpComponent {
   name: string = '';

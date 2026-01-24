@@ -13,7 +13,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatChipsModule } from '@angular/material/chips';
 import { RouterModule } from '@angular/router';
-import { NewPatientComponent } from '../new-patient/new-patient.component';
+// import { NewPatientComponent } from '../new-patient/new-patient.component';
 import { ApiService } from '../../services/api.service';
 
 interface Patient {
@@ -43,7 +43,7 @@ interface Patient {
     MatProgressSpinnerModule,
     MatChipsModule,
     RouterModule,
-    NewPatientComponent
+    //NewPatientComponent
   ],
   templateUrl: './patient-records.component.html',
   styleUrls: ['./patient-records.component.css']
