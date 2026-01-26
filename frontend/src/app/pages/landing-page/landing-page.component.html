@@ -8,19 +8,23 @@
       
       <!-- Middle Navigation Links -->
        <div class="nav-links">
-          <a mat-button href="#">Home</a>
-          <a mat-button routerLink="/services" routerLinkActive="active">
-          Services
+           <a mat-button routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            Home
           </a>
 
-        <a mat-button routerLink="/about" routerLinkActive="active">
-          About Us
-        </a>
+          <a mat-button routerLink="/services" routerLinkActive="active">
+            Services
+          </a>
 
-        <a mat-button routerLink="/contact" routerLinkActive="active">
-          Contact Us
-        </a>
+          <a mat-button routerLink="/about" routerLinkActive="active">
+            About Us
+          </a>
+
+          <a mat-button routerLink="/contact" routerLinkActive="active">
+            Contact Us
+          </a>
        </div>
+       <router-outlet></router-outlet>
 
       <!-- Right: Login & Sign Up -->
       <div class="auth-buttons">

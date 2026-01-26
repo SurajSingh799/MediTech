@@ -11,12 +11,16 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
+import { Routes } from '@angular/router';
+import{ RouterModule } from '@angular/router';
+
+
 
 @Component({
   selector: 'app-landing-page',
   templateUrl: './landing-page.component.html',
   styleUrls: ['./landing-page.component.css'],
-  imports: [CommonModule, LoginComponent, SignUpComponent, AboutComponent, ServicesComponent, ContactComponent, MatToolbarModule, MatButtonModule, MatIconModule, MatCardModule],
+  imports: [CommonModule, LoginComponent, SignUpComponent, MatToolbarModule, MatButtonModule, MatIconModule, MatCardModule,RouterModule],
   standalone: true // GREEN: Added standalone: true to ensure this component can work independently
 })
 export class LandingPageComponent implements OnInit {
@@ -111,3 +115,10 @@ export class LandingPageComponent implements OnInit {
     document.removeEventListener('keydown', () => {});
   }
 }
+export const routes: Routes = [
+  { path: '', component: LandingPageComponent },
+  { path: 'services', component: ServicesComponent },
+  { path: 'about', component: AboutComponent },
+  { path: 'contact', component: ContactComponent },
+  { path: '**', redirectTo: '' }
+];
