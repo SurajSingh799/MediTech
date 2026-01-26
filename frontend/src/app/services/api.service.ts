@@ -2,7 +2,7 @@
 
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { environment } from '../environment';
+import { environment } from '../../environment/environment';
 import { Observable } from 'rxjs';
 import { tap,catchError } from 'rxjs/operators';
 import { of,throwError } from 'rxjs';
@@ -85,7 +85,7 @@ export class ApiService {
     return throwError(() => new Error('No authentication token found'));
   }
   return this.http.post<NotificationResponse>(
-    '${this.API_URL}/api/notifications/send',
+    `${this.API_URL}/api/notifications/send`,
     data,
     {
       headers: {
