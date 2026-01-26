@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginComponent } from '../login/login.component';
 import { SignUpComponent } from '../signup/signup.component';
+import { AboutComponent } from '../about/about.component';
+import { ServicesComponent } from '../service/service.component';
+import { ContactComponent } from '../contact/contact.component';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../../services/api.service';
 import { MatToolbarModule } from '@angular/material/toolbar';   
@@ -13,7 +16,7 @@ import { MatCardModule } from '@angular/material/card';
   selector: 'app-landing-page',
   templateUrl: './landing-page.component.html',
   styleUrls: ['./landing-page.component.css'],
-  imports: [CommonModule, LoginComponent, SignUpComponent, MatToolbarModule, MatButtonModule, MatIconModule, MatCardModule],
+  imports: [CommonModule, LoginComponent, SignUpComponent, AboutComponent, ServicesComponent, ContactComponent, MatToolbarModule, MatButtonModule, MatIconModule, MatCardModule],
   standalone: true // GREEN: Added standalone: true to ensure this component can work independently
 })
 export class LandingPageComponent implements OnInit {
