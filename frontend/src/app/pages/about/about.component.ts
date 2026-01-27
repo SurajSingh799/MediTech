@@ -1,76 +1,64 @@
-// about.component.ts
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { RouterLink } from '@angular/router';
+
 @Component({
   selector: 'app-about',
   templateUrl: './about.component.html',
-  imports: [CommonModule],
-  styleUrls: ['./about.component.css']
+  imports: [CommonModule, MatIcon, MatButtonModule, RouterLink],
+  styleUrls: ['./about.component.css'],
+  standalone: true
 })
 export class AboutComponent {
-  stats = [
-    { number: '50K+', label: 'Active Users' },
-    { number: '200+', label: 'Healthcare Facilities' },
-    { number: '99.9%', label: 'Uptime Guarantee' },
-    { number: '24/7', label: 'Support Available' }
-  ];
-
   values = [
     {
       icon: 'security',
+      color: '#1976d2',
       title: 'Security First',
-      description: 'We prioritize the security and privacy of healthcare data with enterprise-grade encryption and compliance standards.'
+      description: 'We use industry-standard encryption and follow HIPAA guidelines to protect patient data.'
     },
     {
-      icon: 'innovation',
-      title: 'Innovation',
-      description: 'Continuously evolving our platform with cutting-edge technology to meet the changing needs of healthcare providers.'
+      icon: 'speed',
+      color: '#4caf50',
+      title: 'User-Friendly',
+      description: 'Building intuitive interfaces that make complex healthcare workflows simple and efficient.'
     },
     {
-      icon: 'reliability',
-      title: 'Reliability',
-      description: 'Delivering consistent, dependable service with 99.9% uptime and robust disaster recovery protocols.'
+      icon: 'support',
+      color: '#ff9800',
+      title: 'Reliable Support',
+      description: 'Providing responsive support to help you get the most out of our platform.'
     },
     {
-      icon: 'transparency',
+      icon: 'visibility',
+      color: '#9c27b0',
       title: 'Transparency',
-      description: 'Maintaining open communication with complete audit trails and clear documentation of all system activities.'
+      description: 'Clear communication, detailed audit logs, and honest about our capabilities and limitations.'
     }
   ];
 
-  team = [
+  techStack = [
     {
-      name: 'Dr. Sarah Johnson',
-      role: 'Chief Medical Officer',
-      image: 'assets/team/member1.jpg',
-      bio: '15+ years in healthcare technology'
+      icon: 'cloud',
+      title: 'Cloud-Based',
+      description: 'Secure cloud infrastructure for reliable access anywhere, anytime'
     },
     {
-      name: 'Michael Chen',
-      role: 'Chief Technology Officer',
-      image: 'assets/team/member2.jpg',
-      bio: 'Expert in healthcare data security'
+      icon: 'lock',
+      title: 'HIPAA Compliant',
+      description: 'Built to meet healthcare data protection and privacy requirements'
     },
     {
-      name: 'Emily Rodriguez',
-      role: 'Head of Product',
-      image: 'assets/team/member3.jpg',
-      bio: 'Healthcare UX specialist'
+      icon: 'integration_instructions',
+      title: 'Easy Integration',
+      description: 'Works with your existing systems through standard APIs'
     },
     {
-      name: 'David Thompson',
-      role: 'Chief Compliance Officer',
-      image: 'assets/team/member4.jpg',
-      bio: 'HIPAA compliance authority'
+      icon: 'analytics',
+      title: 'Data Analytics',
+      description: 'Basic reporting and insights to help track patient data trends'
     }
-  ];
-
-  timeline = [
-    { year: '2019', event: 'MediTech founded with vision of secure healthcare data' },
-    { year: '2020', event: 'First 50 healthcare facilities onboarded' },
-    { year: '2022', event: 'Achieved HIPAA compliance certification' },
-    { year: '2023', event: 'Reached 200+ healthcare facilities milestone' },
-    { year: '2024', event: 'Launched AI-powered analytics platform' },
-    { year: '2025', event: 'Expanding to international markets' }
   ];
 }
