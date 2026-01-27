@@ -21,11 +21,16 @@ import { Appoinment } from './pages/check appointments/appoinment.component';
 import { NotificationComponent } from './pages/noti/noti.component';
 import { PendingRecordsComponent } from './pages/pending/pending.component';
 import { DocumentComponent } from './pages/document/document.component';
+import { ServicesComponent } from './pages/service/service.component';
+import { AboutComponent } from './pages/about/about.component';
+import { ContactComponent } from './pages/contact/contact.component';
 
 export const routes: Routes = [{ path: '', component: LandingPageComponent },
 { path: 'login', component: LoginComponent },
 { path: 'register', component: SignUpComponent},
-
+{ path: 'services', component: ServicesComponent },
+{ path: 'about', component: AboutComponent },
+{ path: 'contact', component: ContactComponent },
 {
   path: 'dashboard',
   component: DashboardLayoutComponent,

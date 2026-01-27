@@ -1,217 +1,224 @@
-<header>
-  <mat-toolbar class="navbar" color="primary">
+<!-- landing-page.component.html -->
+<div class="landing-wrapper">
+  <!-- Header - Always Visible -->
+  <header>
+    <mat-toolbar class="navbar" color="primary">
       <!-- Left: Logo & Name -->
-      <div class="header">
-          <div class="logo-container"></div>
-          <h1 class="site-name">Meditech</h1>
+      <div class="header" (click)="navigateToHome()" style="cursor: pointer;">
+        <div class="logo-container"></div>
+        <h1 class="site-name">Meditech</h1>
       </div>
       
       <!-- Middle Navigation Links -->
-       <div class="nav-links">
-           <a mat-button routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-            Home
-          </a>
+      <div class="nav-links">
+        <a mat-button routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          Home
+        </a>
 
-          <a mat-button routerLink="/services" routerLinkActive="active">
-            Services
-          </a>
+        <a mat-button routerLink="/services" routerLinkActive="active">
+          Services
+        </a>
 
-          <a mat-button routerLink="/about" routerLinkActive="active">
-            About Us
-          </a>
+        <a mat-button routerLink="/about" routerLinkActive="active">
+          About Us
+        </a>
 
-          <a mat-button routerLink="/contact" routerLinkActive="active">
-            Contact Us
-          </a>
-       </div>
-       <router-outlet></router-outlet>
+        <a mat-button routerLink="/contact" routerLinkActive="active">
+          Contact Us
+        </a>
+      </div>
 
       <!-- Right: Login & Sign Up -->
       <div class="auth-buttons">
-          <button mat-stroked-button color="primary" (click)="toggleLogin()" class="login-button">Login</button>
-          <button mat-raised-button color="primary" (click)="toggleSignup()" class="signup-button">Sign Up</button>  
+        <button mat-stroked-button color="primary" (click)="toggleLogin()" class="login-button">Login</button>
+        <button mat-raised-button color="primary" (click)="toggleSignup()" class="signup-button">Sign Up</button>  
       </div>
-  </mat-toolbar>
-</header>
+    </mat-toolbar>
+  </header>
 
+  <!-- Modal Overlay for blur effect -->
+  <div class="modal-overlay" *ngIf="showLogin || showSignup" (click)="closeAllModals()"></div>
 
-<!-- Modal Overlay for blur effect -->
-<!-- // GREEN: Added modal overlay div that will blur the background -->
-<div class="modal-overlay" *ngIf="showLogin || showSignup" (click)="closeAllModals()"></div>
+  <!-- Login Component with modal styling -->
+  <div class="modal-container" *ngIf="showLogin">
+    <app-login 
+      (closeLogin)="CloseLogin()" 
+      (switchToSignup)="SwitchToSignup()">
+    </app-login>
+  </div>
 
-<!-- Login Component with modal styling -->
-<!-- // GREEN: Added modal-container class to position the login form properly -->
-<div class="modal-container" *ngIf="showLogin">
-  <app-login 
-    (closeLogin)="CloseLogin()" 
-    (switchToSignup)="SwitchToSignup()">
-  </app-login>
-</div>
+  <!-- Signup Component with modal styling -->
+  <div class="modal-container" *ngIf="showSignup">
+    <app-signup 
+      (closeSignup)="CloseSignup()" 
+      (switchToLogin)="SwitchToLogin()">
+    </app-signup>
+  </div>
 
-<!-- Signup Component with modal styling -->
-<!-- // GREEN: Added modal-container class to position the signup form properly -->
-<div class="modal-container" *ngIf="showSignup">
-  <app-signup 
-    (closeSignup)="CloseSignup()" 
-    (switchToLogin)="SwitchToLogin()">
-  </app-signup>
-</div>
-
-<div class="app-container">
-  <!-- Hero Section -->
-  <section class="hero-section">
-    <div class="container">
-      <div class="hero-content">
-        <h1>Secure & Centralized Healthcare Data Management</h1>
-        <p>MediTech provides a secure, role-based platform for managing healthcare records with encryption, audit trails, and controlled access.</p>
-        <div class="hero-buttons">
-          <button class="btn btn-primary" (click)="toggleSignup()">Get Started</button>
-          <button class="btn btn-secondary" (click)="toggleLogin()">Login</button>
-        </div>
-      </div>
-      <div class="hero-card">
-        <div class="card-logo">
-          <span class="logo-circle">M</span>
-          <span class="logo-text">MediTech</span>
-        </div>
-        <div class="card-content"></div>
-        <div class="card-footer">
-          <span class="verified-text">Role-Based Access Verified <i class="check-icon"></i></span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- How It Works Section -->
-  <section class="how-it-works-section">
-    <div class="container">
-      <h2>How MediTech Works</h2>
-      <p class="section-description">
-        Our secure platform combines encrypted cloud storage, role-based access control, and audit logging to keep medical records safe, accessible, and compliant.
-      </p>
-
-      <div class="features-container">
-        <div class="feature-card">
-          <div class="feature-icon blue">
-            <i class="document-icon"></i>
+  <!-- Main Content Area -->
+  <div class="content-wrapper">
+    <!-- Home Page Content - Only show on home route -->
+    <div class="app-container" *ngIf="isHomePage">
+      <!-- Hero Section -->
+      <section class="hero-section">
+        <div class="container">
+          <div class="hero-content">
+            <h1>Secure & Centralized Healthcare Data Management</h1>
+            <p>MediTech provides a secure, role-based platform for managing healthcare records with encryption, audit trails, and controlled access.</p>
+            <div class="hero-buttons">
+              <button class="btn btn-primary" (click)="toggleSignup()">Get Started</button>
+              <button class="btn btn-secondary" (click)="toggleLogin()">Login</button>
+            </div>
           </div>
-          <h3>Secure Data Storage</h3>
-          <p>
-            Medical records are encrypted and securely stored with access controls to ensure privacy and availability.
-          </p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-icon yellow">
-            <i class="blockchain-icon"></i>
-          </div>
-          <h3>Audit Trail & Record History</h3>
-          <p>
-            Every record action is logged with timestamps and user identity, ensuring accountability and traceability.
-          </p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-icon green">
-            <i class="access-icon"></i>
-          </div>
-          <h3>Role-Based Access Control</h3>
-          <p>
-            Patients and doctors have controlled access to medical data based on defined roles and permissions.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Why Choose Section -->
-  <section class="why-choose-section">
-    <div class="container">
-      <div class="why-choose-content">
-        <h2>Why Choose MediTech</h2>
-        <ul class="benefits-list">
-          <li>
-            <i class="check-mark"></i>
-            Enhanced security with encrypted medical records
-          </li>
-          <li>
-            <i class="check-mark"></i>
-            Role-based access for doctors and patients
-          </li>
-          <li>
-            <i class="check-mark"></i>
-            Complete audit trail for compliance and trust
-          </li>
-          <li>
-            <i class="check-mark"></i>
-            Reliable centralized system with high availability
-          </li>
-          <li>
-            <i class="check-mark"></i>
-            User-friendly interface for healthcare workflows
-          </li>
-        </ul>
-      </div>
-      <div class="security-card">
-        <div class="security-icon">
-          <i class="shield-icon"></i>
-        </div>
-        <h3>Enterprise-Grade Security</h3>
-        <p>
-          Your data is protected using encryption, access controls, and continuous monitoring.
-        </p>
-        <button class="btn btn-primary" (click)="toggleSignup()">Get Started Today</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-content">
-        <div class="footer-logo">
-          <div class="logo">
-            <span class="logo-circle">M</span>
-            <span class="logo-text">MediTech</span>
-          </div>
-          <p>Secure healthcare data management with privacy-first design and compliance-ready architecture.</p>
-        </div>
-
-        <div class="footer-links">
-          <div class="footer-column">
-            <h4>Platform</h4>
-            <ul>
-              <li><a href="#">How it Works</a></li>
-              <li><a href="#">Security</a></li>
-              <li><a href="#">Data Privacy</a></li>
-              <li><a href="#">Audit Logs</a></li>
-            </ul>
-          </div>
-
-          <div class="footer-column">
-            <h4>Support</h4>
-            <ul>
-              <li><a href="#">Help Center</a></li>
-              <li><a href="#">Contact Us</a></li>
-              <li><a href="#">FAQs</a></li>
-              <li><a href="#">Privacy Policy</a></li>
-            </ul>
-          </div>
-
-          <div class="footer-column">
-            <h4>Stay Updated</h4>
-            <p>Subscribe to our newsletter for the latest updates.</p>
-            <div class="newsletter-form">
-              <input type="email" placeholder="Your email" class="email-input">
-              <button class="btn btn-subscribe">Subscribe</button>
+          <div class="hero-card">
+            <div class="card-logo">
+              <span class="logo-circle">M</span>
+              <span class="logo-text">MediTech</span>
+            </div>
+            <div class="card-content"></div>
+            <div class="card-footer">
+              <span class="verified-text">Role-Based Access Verified <i class="check-icon">✓</i></span>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div class="footer-bottom">
-        <p>© 2025 MediTech. All rights reserved.</p>
-      </div>
+      <!-- How It Works Section -->
+      <section class="how-it-works-section">
+        <div class="container">
+          <h2>How MediTech Works</h2>
+          <p class="section-description">
+            Our secure platform combines encrypted cloud storage, role-based access control, and audit logging to keep medical records safe, accessible, and compliant.
+          </p>
+
+          <div class="features-container">
+            <div class="feature-card">
+              <div class="feature-icon blue">
+                <i class="document-icon">📄</i>
+              </div>
+              <h3>Secure Data Storage</h3>
+              <p>
+                Medical records are encrypted and securely stored with access controls to ensure privacy and availability.
+              </p>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon yellow">
+                <i class="blockchain-icon">🔗</i>
+              </div>
+              <h3>Audit Trail & Record History</h3>
+              <p>
+                Every record action is logged with timestamps and user identity, ensuring accountability and traceability.
+              </p>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon green">
+                <i class="access-icon">🔐</i>
+              </div>
+              <h3>Role-Based Access Control</h3>
+              <p>
+                Patients and doctors have controlled access to medical data based on defined roles and permissions.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Why Choose Section -->
+      <section class="why-choose-section">
+        <div class="container">
+          <div class="why-choose-content">
+            <h2>Why Choose MediTech</h2>
+            <ul class="benefits-list">
+              <li>
+                <i class="check-mark">✓</i>
+                Enhanced security with encrypted medical records
+              </li>
+              <li>
+                <i class="check-mark">✓</i>
+                Role-based access for doctors and patients
+              </li>
+              <li>
+                <i class="check-mark">✓</i>
+                Complete audit trail for compliance and trust
+              </li>
+              <li>
+                <i class="check-mark">✓</i>
+                Reliable centralized system with high availability
+              </li>
+              <li>
+                <i class="check-mark">✓</i>
+                User-friendly interface for healthcare workflows
+              </li>
+            </ul>
+          </div>
+          <div class="security-card">
+            <div class="security-icon">
+              <i class="shield-icon">🛡️</i>
+            </div>
+            <h3>Enterprise-Grade Security</h3>
+            <p>
+              Your data is protected using encryption, access controls, and continuous monitoring.
+            </p>
+            <button class="btn btn-primary" (click)="toggleSignup()">Get Started Today</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <div class="container">
+          <div class="footer-content">
+            <div class="footer-logo">
+              <div class="logo">
+                <span class="logo-circle">M</span>
+                <span class="logo-text">MediTech</span>
+              </div>
+              <p>Secure healthcare data management with privacy-first design and compliance-ready architecture.</p>
+            </div>
+
+            <div class="footer-links">
+              <div class="footer-column">
+                <h4>Platform</h4>
+                <ul>
+                  <li><a routerLink="/">How it Works</a></li>
+                  <li><a href="#">Security</a></li>
+                  <li><a href="#">Data Privacy</a></li>
+                  <li><a href="#">Audit Logs</a></li>
+                </ul>
+              </div>
+
+              <div class="footer-column">
+                <h4>Support</h4>
+                <ul>
+                  <li><a href="#">Help Center</a></li>
+                  <li><a routerLink="/contact">Contact Us</a></li>
+                  <li><a href="#">FAQs</a></li>
+                  <li><a href="#">Privacy Policy</a></li>
+                </ul>
+              </div>
+
+              <div class="footer-column">
+                <h4>Stay Updated</h4>
+                <p>Subscribe to our newsletter for the latest updates.</p>
+                <div class="newsletter-form">
+                <input type="email" class="email-input" placeholder="Your email" [(ngModel)]="email" name="email" required>
+                <button class="btn btn-subscribe" (click)="subscribe()" [disabled]="!email">Subscribe</button>
+              </div>
+              <small *ngIf="message" class="subscribe-msg">{{ message }}</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="footer-bottom">
+            <p>© 2025 MediTech. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
     </div>
-  </footer>
+
+    <!-- Router Outlet for other pages (Services, About, Contact) -->
+    <router-outlet></router-outlet>
+  </div>
 </div>
