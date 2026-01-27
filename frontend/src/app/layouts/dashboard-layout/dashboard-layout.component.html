@@ -29,11 +29,11 @@
           <span *ngIf="unreadCount > 0" class="notification-badge">{{ unreadCount }}</span>
         </button>
         
-        <!-- Notification dropdown -->
-        <div *ngIf="showNotifications" class="notification-dropdown">
+        <!-- Notification dropdown - ADD #notificationPanel HERE -->
+        <div #notificationPanel *ngIf="showNotifications" class="notification-dropdown">
           <div class="notification-header">
             <h3>Notifications</h3>
-            <button mat-button color="primary" *ngIf="notifications.length" (click)="markAllAsRead()" > Mark all as read</button>
+            <button mat-button color="primary" *ngIf="notifications.length" (click)="markAllAsRead()">Mark all as read</button>
           </div>
           <div class="notification-list">
             <div *ngIf="notifications.length === 0" class="no-notifications">

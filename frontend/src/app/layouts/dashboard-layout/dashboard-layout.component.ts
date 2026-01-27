@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Router } from '@angular/router';
 import { sharedImports } from '../../material';
@@ -29,6 +29,8 @@ export class DashboardLayoutComponent implements OnInit {
   notificationAutoCloseTimer: any;
   userType: 'patient' | 'doctor' | null = null;
   userInitials: string = 'JD';
+
+  @ViewChild('notificationPanel') notificationPanel!: ElementRef;
 
   patientMenuItems = [
     { text: 'Dashboard', icon: 'dashboard', path: '/dashboard' },
@@ -82,6 +84,20 @@ export class DashboardLayoutComponent implements OnInit {
     setInterval(() => {
       this.fetchNotifications();
     }, 30000);
+  }
+
+  // Add HostListener to detect clicks outside
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+    if (this.showNotifications && this.notificationPanel) {
+      const clickedInside = this.notificationPanel.nativeElement.contains(event.target);
+      const clickedOnButton = (event.target as HTMLElement).closest('.notification-button');
+      
+      // Close the panel if clicked outside and not on the notification button
+      if (!clickedInside && !clickedOnButton) {
+        this.closeNotifications();
+      }
+    }
   }
 
   setMenuItemsBasedOnUserType() {
@@ -143,37 +159,43 @@ export class DashboardLayoutComponent implements OnInit {
   }
 
   toggleNotifications() {
-  this.showNotifications = !this.showNotifications;
+    this.showNotifications = !this.showNotifications;
 
-  if (this.showNotifications) {
-    // If there are unread notifications, mark them as read
-    if (this.unreadCount > 0) {
-      this.notifications.forEach(notification => {
-        if (!notification.read) {
-          notification.read = true;
-        }
-      });
-      this.unreadCount = 0;
+    if (this.showNotifications) {
+      // If there are unread notifications, mark them as read
+      if (this.unreadCount > 0) {
+        this.notifications.forEach(notification => {
+          if (!notification.read) {
+            notification.read = true;
+          }
+        });
+        this.unreadCount = 0;
+      }
+
+      // Clear any existing timer before starting a new one
+      if (this.notificationAutoCloseTimer) {
+        clearTimeout(this.notificationAutoCloseTimer);
+      }
+
+      // Start a new 10-second auto-close timer
+      this.notificationAutoCloseTimer = setTimeout(() => {
+        this.closeNotifications();
+      }, 10000); // 10 seconds
+    } else {
+      this.closeNotifications();
     }
+  }
 
-    // Clear any existing timer before starting a new one
-    if (this.notificationAutoCloseTimer) {
-      clearTimeout(this.notificationAutoCloseTimer);
-    }
-
-    // Start a new 30-second auto-close timer
-    this.notificationAutoCloseTimer = setTimeout(() => {
-      this.showNotifications = false;
-    }, 10000); // 30 seconds
-  } else {
-    // If the panel was manually closed, clear the timer
+  // New method to close notifications and clean up
+  closeNotifications() {
+    this.showNotifications = false;
+    
+    // Clear the timer if it exists
     if (this.notificationAutoCloseTimer) {
       clearTimeout(this.notificationAutoCloseTimer);
       this.notificationAutoCloseTimer = null;
     }
   }
-}
-
 
   markAsRead(notification: any) {
     if (!notification.read) {
@@ -196,5 +218,12 @@ export class DashboardLayoutComponent implements OnInit {
   logout() {
     this.apiService.logout();
     this.router.navigate(['']);
+  }
+
+  // Clean up timer on component destroy
+  ngOnDestroy() {
+    if (this.notificationAutoCloseTimer) {
+      clearTimeout(this.notificationAutoCloseTimer);
+    }
   }
 }
