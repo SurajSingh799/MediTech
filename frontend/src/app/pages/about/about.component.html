@@ -1,10 +1,32 @@
 <div class="about-container">
-  <!-- Hero Section -->
+  <!-- Hero Section - Option 3 Split Layout -->
   <section class="about-hero">
+    <div class="hero-bg">
+      <div class="circle circle-1"></div>
+      <div class="circle circle-2"></div>
+    </div>
     <div class="container">
-      <div class="hero-content">
-        <h1>About MediTech</h1>
-        <p>Building secure healthcare data management solutions for modern medical practices</p>
+      <div class="hero-inner">
+        <div class="hero-content">
+          <span class="hero-badge">About Us</span>
+          <h1>Healthcare Data, <span class="highlight">Simplified.</span></h1>
+          <p>We build secure, compliant solutions that help medical professionals focus on what matters most — patient care.</p>
+          <div class="hero-buttons">
+            <button mat-raised-button class="started" color="accent" routerLink="/contact">Get Started</button>
+            <button mat-stroked-button class="services" routerLink="/services">Our Services</button>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="visual-card">
+            <div class="card-icon">🏥</div>
+            <div class="card-items">
+              <div class="card-item">🔒 Secure</div>
+              <div class="card-item">⚡ Fast</div>
+              <div class="card-item">✅ Compliant</div>
+              <div class="card-item">👨‍⚕️ Healthcare Ready</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -24,12 +46,15 @@
   <section class="values-section">
     <div class="container">
       <h2>What We Stand For</h2>
+      <p class="section-subtitle">Our core principles guide everything we build</p>
       
       <div class="values-grid">
         <div class="value-card" *ngFor="let value of values">
-          <mat-icon class="value-icon" [style.color]="value.color">{{ value.icon }}</mat-icon>
-          <h3>{{ value.title }}</h3>
-          <p>{{ value.description }}</p>
+          <mat-icon class="value-icon">{{ value.icon }}</mat-icon>
+          <div class="value-content">
+            <h3>{{ value.title }}</h3>
+            <p>{{ value.description }}</p>
+          </div>
         </div>
       </div>
     </div>
@@ -39,11 +64,15 @@
   <section class="tech-section">
     <div class="container">
       <h2>Our Approach</h2>
+      <p class="section-subtitle">Built with modern technology for reliability</p>
+      
       <div class="tech-grid">
         <div class="tech-item" *ngFor="let item of techStack">
           <mat-icon>{{ item.icon }}</mat-icon>
-          <h3>{{ item.title }}</h3>
-          <p>{{ item.description }}</p>
+          <div class="tech-content">
+            <h3>{{ item.title }}</h3>
+            <p>{{ item.description }}</p>
+          </div>
         </div>
       </div>
     </div>
@@ -56,8 +85,8 @@
         <h2>Interested in Learning More?</h2>
         <p>We'd be happy to show you how MediTech can work for your practice</p>
         <div class="cta-buttons">
-          <button mat-raised-button color="accent" routerLink="/contact">Contact Us</button>
-          <button mat-stroked-button routerLink="/services">View Services</button>
+          <button mat-raised-button class="started" color="accent" routerLink="/contact">Contact Us</button>
+          <button mat-stroked-button class="services" routerLink="/services">View Services</button>
         </div>
       </div>
     </div>

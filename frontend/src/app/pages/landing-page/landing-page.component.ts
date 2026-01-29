@@ -1,145 +1,171 @@
-// landing-page.component.ts
-import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  OnDestroy
+} from '@angular/core';
+import { Router, NavigationEnd, RouterModule } from '@angular/router';
+import { filter } from 'rxjs/operators';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
+// Components
 import { LoginComponent } from '../login/login.component';
 import { SignUpComponent } from '../signup/signup.component';
-import { CommonModule } from '@angular/common';
+
+// Services
 import { ApiService } from '../../services/api.service';
-import { MatToolbarModule } from '@angular/material/toolbar';   
+
+// Angular Material
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { Router, NavigationEnd } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
-import { RouterModule } from '@angular/router';
-import { filter } from 'rxjs/operators';
-import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-landing-page',
   templateUrl: './landing-page.component.html',
   styleUrls: ['./landing-page.component.css'],
+  standalone: true,
   imports: [
-    CommonModule, 
-    LoginComponent, 
-    SignUpComponent, 
-    MatToolbarModule, 
-    MatButtonModule, 
-    MatIconModule, 
-    MatCardModule,
+    CommonModule,
+    FormsModule,
     RouterModule,
-    FormsModule
-  ],
-  standalone: true
+    LoginComponent,
+    SignUpComponent,
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCardModule
+  ]
 })
-export class LandingPageComponent implements OnInit, AfterViewInit, OnDestroy {
-  showLogin: boolean = false;
-  showSignup: boolean = false;
-  isHomePage: boolean = true;
+export class LandingPageComponent
+  implements OnInit, AfterViewInit, OnDestroy {
+
+  // Modal states
+  showLogin = false;
+  showSignup = false;
+
+  // UI states
+  isHomePage = false;
+  isMobileMenuOpen = false;
+
+  // Newsletter
   email: string = '';
-  message = '';
-  
-  constructor(private router: Router, private apiService: ApiService) {
-    // Subscribe to router events to detect route changes
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe((event: any) => {
-      // Check if we're on the home page
-      this.isHomePage = event.url === '/' || event.url === '';
-      
-      // Close modals when navigating
-      this.closeAllModals();
-    });
+  message: string = '';
+
+  constructor(
+    private router: Router,
+    private apiService: ApiService
+  ) {
+    // Detect route changes
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        this.checkIfHomePage(event.urlAfterRedirects);
+        this.closeAllModals();
+        this.closeMobileMenu();
+      });
   }
 
-  ngOnInit() {
-    // Check initial route
-    this.isHomePage = this.router.url === '/' || this.router.url === '';
-    
+  ngOnInit(): void {
+    this.checkIfHomePage(this.router.url);
+
+    // Restore session if exists
     const token = localStorage.getItem('token');
     const user = localStorage.getItem('user');
 
     if (token && user) {
-      // Optional: make a backend call to verify token
       this.apiService.getCurrentUser().subscribe({
-        next: userData => {
-          console.log('Session restored:', userData);
-          // optionally store in app state or service
-        },
-        error: err => {
-          console.warn('Token is invalid or expired, clearing...');
+        next: data => console.log('Session restored', data),
+        error: () => {
+          console.warn('Invalid session, logging out');
           this.apiService.logout();
         }
       });
     }
   }
 
-  // Close modals when clicking outside
-  closeAllModals() {
-    this.showLogin = false;
-    this.showSignup = false;
-    document.body.style.overflow = 'auto';
+  /* -------------------- ROUTING -------------------- */
+
+  checkIfHomePage(url: string): void {
+    this.isHomePage = url === '/' || url === '/home';
   }
 
-  toggleLogin() {
-    console.log("Login Clicked!"); 
-    this.showLogin = true;
-    this.showSignup = false;
-    document.body.style.overflow = 'hidden';
-  }
-  
-  CloseLogin() {
-    console.log("Login Closed!");
-    this.showLogin = false;
-    document.body.style.overflow = 'auto';
-  }
-  
-  toggleSignup() {
-    console.log("Signup Clicked!"); 
-    this.showSignup = true;
-    this.showLogin = false;
-    document.body.style.overflow = 'hidden';
-  }
-  
-  CloseSignup() {
-    console.log("Signup Closed!");
-    this.showSignup = false;
-    document.body.style.overflow = 'auto';
-  }
-  
-  SwitchToSignup() {
-    console.log("Switching to Signup");
-    this.showLogin = false;
-    this.showSignup = true;
+  navigateToHome(): void {
+    this.router.navigate(['/']);
+    window.scrollTo(0, 0);
+    this.closeMobileMenu();
   }
 
-  SwitchToLogin() {
-    console.log("Switching to Login");
-    this.showLogin = true;
-    this.showSignup = false; 
-  }
-
-  // Navigate to specific sections
-  navigateToServices() {
+  navigateToServices(): void {
     this.router.navigate(['/services']);
     window.scrollTo(0, 0);
   }
 
-  navigateToAbout() {
+  navigateToAbout(): void {
     this.router.navigate(['/about']);
     window.scrollTo(0, 0);
   }
 
-  navigateToContact() {
+  navigateToContact(): void {
     this.router.navigate(['/contact']);
     window.scrollTo(0, 0);
   }
 
-  navigateToHome() {
-    this.router.navigate(['/']);
-    window.scrollTo(0, 0);
+  /* -------------------- MODALS -------------------- */
+
+  toggleLogin(): void {
+    this.showLogin = true;
+    this.showSignup = false;
+    document.body.style.overflow = 'hidden';
   }
-  
-  // Close modals when ESC key is pressed
-  ngAfterViewInit() {
+
+  toggleSignup(): void {
+    this.showSignup = true;
+    this.showLogin = false;
+    document.body.style.overflow = 'hidden';
+  }
+
+  CloseLogin(): void {
+    this.showLogin = false;
+    document.body.style.overflow = 'auto';
+  }
+
+  CloseSignup(): void {
+    this.showSignup = false;
+    document.body.style.overflow = 'auto';
+  }
+
+  SwitchToSignup(): void {
+    this.showLogin = false;
+    this.showSignup = true;
+  }
+
+  SwitchToLogin(): void {
+    this.showSignup = false;
+    this.showLogin = true;
+  }
+
+  closeAllModals(): void {
+    this.showLogin = false;
+    this.showSignup = false;
+    document.body.style.overflow = 'auto';
+  }
+
+  /* -------------------- MOBILE MENU -------------------- */
+
+  toggleMobileMenu(): void {
+    this.isMobileMenuOpen = !this.isMobileMenuOpen;
+  }
+
+  closeMobileMenu(): void {
+    this.isMobileMenuOpen = false;
+  }
+
+  /* -------------------- ESC KEY -------------------- */
+
+  ngAfterViewInit(): void {
     document.addEventListener('keydown', this.handleKeyPress);
   }
 
@@ -147,24 +173,26 @@ export class LandingPageComponent implements OnInit, AfterViewInit, OnDestroy {
     if (event.key === 'Escape') {
       this.closeAllModals();
     }
-  }
-  
-  // Cleanup to remove event listener when component is destroyed
-  ngOnDestroy() {
+  };
+
+  ngOnDestroy(): void {
     document.removeEventListener('keydown', this.handleKeyPress);
     document.body.style.overflow = 'auto';
   }
-  subscribe() {
+
+  /* -------------------- NEWSLETTER -------------------- */
+
+  subscribe(): void {
     if (!this.isValidEmail(this.email)) {
       this.message = 'Please enter a valid email address';
       return;
     }
 
-    // 🔥 Later: call backend API here
     console.log('Subscribed email:', this.email);
-
     this.message = 'Thanks for subscribing!';
     this.email = '';
+
+    setTimeout(() => (this.message = ''), 3000);
   }
 
   private isValidEmail(email: string): boolean {

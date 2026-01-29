@@ -1,11 +1,13 @@
 // services.component.ts
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatIcon } from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
+
 @Component({
   selector: 'app-services',
+  standalone: true,
+  imports: [CommonModule, MatIconModule],
   templateUrl: './service.component.html',
-  imports: [CommonModule,MatIcon],
   styleUrls: ['./service.component.css']
 })
 export class ServicesComponent {

@@ -1,212 +1,195 @@
-<!-- contact.component.html -->
-<div class="contact-container">
-  <!-- Hero Section -->
-  <section class="contact-hero">
-    <div class="container">
-      <div class="hero-content">
-        <h1>Get In Touch</h1>
-        <p>We're here to help and answer any questions you might have about MediTech</p>
+<!-- HIGH-CONVERSION CONTACT CTA SECTION -->
+<section class="contact-cta-section">
+  <div class="cta-container">
+    <div class="cta-content">
+      <!-- Badge / Eyebrow Text -->
+      <div class="cta-badge">Get in Touch</div>
+
+      <!-- Heading with Highlighted Keyword -->
+      <h2 class="cta-heading">
+        Let's Talk About Your <span class="highlight">Healthcare</span> Needs
+      </h2>
+
+      <!-- Description -->
+      <p class="cta-description">
+        Have questions or need a custom solution? Our team is ready to help you 
+        achieve secure and efficient healthcare data management.
+      </p>
+
+      <!-- CTA Buttons -->
+      <div class="cta-buttons">
+        <button class="btn-primary-cta" routerLink="/contact">
+          <span>Contact Us</span>
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+        <button class="btn-secondary-cta">
+          <span>Email Us</span>
+          <mat-icon>email</mat-icon>
+        </button>
       </div>
     </div>
-  </section>
 
-  <!-- Contact Info Cards -->
-  <section class="contact-info-section">
-    <div class="container">
-      <div class="contact-info-grid">
-        <div class="info-card" *ngFor="let info of contactInfo">
-          <div class="info-icon" [ngClass]="info.icon">
-            <div class="icon-circle"></div>
-          </div>
-          <h3>{{ info.title }}</h3>
-          <a [href]="info.link" class="info-link">{{ info.details }}</a>
-        </div>
+    <!-- Visual Element (Desktop Only) - Glassmorphism Card -->
+    <div class="cta-visual-card">
+      <div class="visual-header">
+        <div class="visual-icon">💬</div>
+        <h3>Why Reach Out?</h3>
       </div>
+      
+      <ul class="trust-points">
+        <li>
+          <mat-icon>flash_on</mat-icon>
+          <span>Fast Response</span>
+        </li>
+        <li>
+          <mat-icon>security</mat-icon>
+          <span>Secure Communication</span>
+        </li>
+        <li>
+          <mat-icon>support_agent</mat-icon>
+          <span>Dedicated Support</span>
+        </li>
+        <li>
+          <mat-icon>medical_services</mat-icon>
+          <span>Healthcare Experts</span>
+        </li>
+      </ul>
     </div>
-  </section>
+  </div>
 
-  <!-- Contact Form and Map Section -->
-  <section class="form-section">
+  <!-- Decorative Background Circles -->
+  <div class="bg-circle bg-circle-top"></div>
+  <div class="bg-circle bg-circle-bottom"></div>
+</section>
+
+  <!-- Main Contact Section -->
+  <section class="contact-main">
     <div class="container">
-      <div class="form-grid">
-        <!-- Contact Form -->
-        <div class="form-container">
-          <h2>Send Us a Message</h2>
-          <p class="form-description">Fill out the form below and our team will get back to you within 24 hours</p>
+      <div class="contact-grid">
+        <!-- Contact Form Card -->
+        <div class="contact-form-card">
+          <h2>Send a Message</h2>
           
-          <form (ngSubmit)="onSubmit()" class="contact-form">
+          <form class="contact-form" (ngSubmit)="onSubmit()" #contactForm="ngForm">
+            <!-- Name & Email Row -->
             <div class="form-row">
               <div class="form-group">
-                <label for="name">Full Name *</label>
+                <label for="name">Name <span class="required">*</span></label>
                 <input 
                   type="text" 
                   id="name" 
-                  [(ngModel)]="contactForm.name" 
                   name="name" 
-                  required 
-                  placeholder="John Doe">
+                  [(ngModel)]="formData.name"
+                  placeholder="Your Name"
+                  required
+                  class="form-input"
+                >
               </div>
 
               <div class="form-group">
-                <label for="email">Email Address *</label>
+                <label for="email">Email <span class="required">*</span></label>
                 <input 
                   type="email" 
                   id="email" 
-                  [(ngModel)]="contactForm.email" 
                   name="email" 
-                  required 
-                  placeholder="john@example.com">
+                  [(ngModel)]="formData.email"
+                  placeholder="your@example.com"
+                  required
+                  class="form-input"
+                >
               </div>
             </div>
 
-            <div class="form-row">
-              <div class="form-group">
-                <label for="phone">Phone Number</label>
-                <input 
-                  type="tel" 
-                  id="phone" 
-                  [(ngModel)]="contactForm.phone" 
-                  name="phone" 
-                  placeholder="+1 (555) 123-4567">
-              </div>
-
-              <div class="form-group">
-                <label for="company">Company/Organization</label>
-                <input 
-                  type="text" 
-                  id="company" 
-                  [(ngModel)]="contactForm.company" 
-                  name="company" 
-                  placeholder="Healthcare Inc.">
-              </div>
-            </div>
-
+            <!-- Subject -->
             <div class="form-group">
-              <label for="inquiryType">Inquiry Type</label>
-              <select 
-                id="inquiryType" 
-                [(ngModel)]="contactForm.inquiryType" 
-                name="inquiryType" 
-                class="form-select">
-                <option value="general">General Inquiry</option>
-                <option value="sales">Sales</option>
-                <option value="support">Technical Support</option>
-                <option value="partnership">Partnership</option>
-                <option value="demo">Request a Demo</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="subject">Subject *</label>
+              <label for="subject">Subject <span class="required">*</span></label>
               <input 
                 type="text" 
                 id="subject" 
-                [(ngModel)]="contactForm.subject" 
                 name="subject" 
-                required 
-                placeholder="How can we help you?">
+                [(ngModel)]="formData.subject"
+                placeholder="How can we help?"
+                required
+                class="form-input"
+              >
             </div>
 
+            <!-- Message -->
             <div class="form-group">
-              <label for="message">Message *</label>
+              <label for="message">Message <span class="required">*</span></label>
               <textarea 
                 id="message" 
-                [(ngModel)]="contactForm.message" 
                 name="message" 
-                required 
-                rows="6" 
-                placeholder="Tell us more about your needs..."></textarea>
+                [(ngModel)]="formData.message"
+                placeholder="Tell us more about your inquiry..."
+                required
+                rows="5"
+                class="form-textarea"
+              ></textarea>
             </div>
 
-            <button type="submit" class="submit-btn">Send Message</button>
+            <!-- Submit Button -->
+            <button 
+              type="submit" 
+              class="btn-submit"
+              [disabled]="!contactForm.form.valid"
+            >
+              <span>Send Message</span>
+              <mat-icon>send</mat-icon>
+            </button>
+
+            <!-- Privacy Notice -->
+            <p class="form-privacy">
+              <mat-icon class="privacy-icon">shield</mat-icon>
+              Your information is secure and will never be shared
+            </p>
           </form>
         </div>
 
-        <!-- Info Sidebar -->
-        <div class="info-sidebar">
-          <div class="sidebar-card">
-            <h3>Why Contact Us?</h3>
-            <ul class="benefits-list">
-              <li>
-                <span class="check-icon">✓</span>
-                24/7 customer support
-              </li>
-              <li>
-                <span class="check-icon">✓</span>
-                Expert healthcare IT consultation
-              </li>
-              <li>
-                <span class="check-icon">✓</span>
-                Free demo and trial
-              </li>
-              <li>
-                <span class="check-icon">✓</span>
-                Custom solution design
-              </li>
-              <li>
-                <span class="check-icon">✓</span>
-                Quick response time
-              </li>
-            </ul>
+        <!-- Sidebar Info Cards -->
+        <div class="contact-sidebar">
+          <!-- Download CTA Card -->
+          <div class="info-card cta-card">
+            <div class="cta-icon">
+            </div>
+            <h3>MEDITECH</h3>
+            <p>Real-time healthcare data & secure medical records</p>
           </div>
 
-          <div class="sidebar-card urgent-card">
-            <h3>Need Urgent Support?</h3>
-            <p>For critical technical issues, please call our emergency hotline:</p>
-            <a href="tel:+15551234567" class="urgent-phone">+1 (555) 123-4567</a>
-            <p class="urgent-note">Available 24/7 for existing customers</p>
+          <!-- Contact Info Card -->
+          <div class="info-card">
+            <h3>Contact Info</h3>
+            
+            <div class="contact-item">
+              <div class="contact-icon email-icon">
+                <mat-icon>email</mat-icon>
+              </div>
+              <div class="contact-details">
+                <h4>Email Us</h4>
+                <a href="mailto:contact@meditech.com">contact&#64;meditech.com</a>
+              </div>
+            </div>
+
+            <div class="contact-item">
+              <div class="contact-icon phone-icon">
+                <mat-icon>phone</mat-icon>
+              </div>
+              <div class="contact-details">
+                <h4>Call Us</h4>
+                <a href="tel:+911234567890">+91 123 456 7890</a>
+              </div>
+            </div>
+
+            <div class="response-badge">
+              <mat-icon>schedule</mat-icon>
+              <span>We respond within 24 hours</span>
+            </div>
           </div>
+
+         
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Office Locations -->
-  <section class="offices-section">
-    <div class="container">
-      <h2>Our Offices</h2>
-      <p class="section-subtitle">Visit us at one of our locations</p>
-      
-      <div class="offices-grid">
-        <div class="office-card" *ngFor="let office of offices">
-          <div class="office-icon">📍</div>
-          <h3>{{ office.city }}</h3>
-          <p class="office-address">{{ office.address }}</p>
-          <p class="office-postal">{{ office.postal }}</p>
-          <a [href]="'tel:' + office.phone" class="office-phone">{{ office.phone }}</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FAQ Section -->
-  <section class="faq-section">
-    <div class="container">
-      <h2>Frequently Asked Questions</h2>
-      <p class="section-subtitle">Quick answers to common questions</p>
-      
-      <div class="faq-container">
-        <div class="faq-item" *ngFor="let faq of faqs; let i = index" [class.open]="faq.open">
-          <div class="faq-question" (click)="toggleFaq(i)">
-            <h3>{{ faq.question }}</h3>
-            <span class="faq-toggle">{{ faq.open ? '−' : '+' }}</span>
-          </div>
-          <div class="faq-answer" *ngIf="faq.open">
-            <p>{{ faq.answer }}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA Section -->
-  <section class="contact-cta">
-    <div class="container">
-      <div class="cta-content">
-        <h2>Ready to Get Started?</h2>
-        <p>Join hundreds of healthcare facilities using MediTech for secure data management</p>
-        <button class="btn btn-primary">Schedule a Demo</button>
-      </div>
-    </div>
-  </section>
-</div>
+  

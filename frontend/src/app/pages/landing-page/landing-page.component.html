@@ -9,27 +9,40 @@
         <h1 class="site-name">Meditech</h1>
       </div>
       
+      <!-- Hamburger Menu Icon (Mobile Only) -->
+      <button class="hamburger-menu" (click)="toggleMobileMenu()" aria-label="Toggle menu">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+      
       <!-- Middle Navigation Links -->
-      <div class="nav-links">
-        <a mat-button routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <div class="nav-links" [class.mobile-menu-open]="isMobileMenuOpen">
+        <a mat-button routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="closeMobileMenu()">
           Home
         </a>
 
-        <a mat-button routerLink="/services" routerLinkActive="active">
+        <a mat-button routerLink="/services" routerLinkActive="active" (click)="closeMobileMenu()">
           Services
         </a>
 
-        <a mat-button routerLink="/about" routerLinkActive="active">
+        <a mat-button routerLink="/about" routerLinkActive="active" (click)="closeMobileMenu()">
           About Us
         </a>
 
-        <a mat-button routerLink="/contact" routerLinkActive="active">
+        <a mat-button routerLink="/contact" routerLinkActive="active" (click)="closeMobileMenu()">
           Contact Us
         </a>
+        
+        <!-- Mobile Auth Buttons (inside nav menu) -->
+        <div class="mobile-auth-buttons">
+          <button mat-stroked-button color="primary" (click)="toggleLogin(); closeMobileMenu()" class="login-button">Login</button>
+          <button mat-raised-button color="primary" (click)="toggleSignup(); closeMobileMenu()" class="signup-button">Sign Up</button>
+        </div>
       </div>
 
-      <!-- Right: Login & Sign Up -->
-      <div class="auth-buttons">
+      <!-- Right: Login & Sign Up (Desktop Only) -->
+      <div class="auth-buttons desktop-auth">
         <button mat-stroked-button color="primary" (click)="toggleLogin()" class="login-button">Login</button>
         <button mat-raised-button color="primary" (click)="toggleSignup()" class="signup-button">Sign Up</button>  
       </div>
@@ -199,14 +212,14 @@
                 </ul>
               </div>
 
-              <div class="footer-column">
+              <div class="footer-column footer-newsletter">
                 <h4>Stay Updated</h4>
                 <p>Subscribe to our newsletter for the latest updates.</p>
                 <div class="newsletter-form">
-                <input type="email" class="email-input" placeholder="Your email" [(ngModel)]="email" name="email" required>
-                <button class="btn btn-subscribe" (click)="subscribe()" [disabled]="!email">Subscribe</button>
-              </div>
-              <small *ngIf="message" class="subscribe-msg">{{ message }}</small>
+                  <input type="email" class="email-input" placeholder="Your email" [(ngModel)]="email" name="email" required>
+                  <button class="btn btn-subscribe" (click)="subscribe()" [disabled]="!email">Subscribe</button>
+                </div>
+                <small *ngIf="message" class="subscribe-msg">{{ message }}</small>
               </div>
             </div>
           </div>
