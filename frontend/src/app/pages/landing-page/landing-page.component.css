@@ -692,14 +692,9 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1100;
-  width: 500px;
+  width: auto;
   max-width: 90%;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  padding: 20px;
-  height: auto;
-  min-height: 450px;
+  /* Remove all the extra styling - no background, no padding, no shadow */
 }
 
 app-login, app-signup {
@@ -1285,4 +1280,40 @@ app-login, app-signup {
 
 .mobile-auth-buttons .signup-button {
   border-radius: 20px;
+}
+
+/* Modal Container */
+.modal-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  width: 90%;              /* ← THIS IS THE PROBLEM */
+  max-width: 450px;        /* ← THIS TOO */
+  background: white;        /* ← AND THIS */
+  border-radius: 12px;      /* ← AND THIS */
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3); 
+}
+
+/* Ensure the signup component inside takes full width */
+.modal-container app-signup {
+  display: block;
+  width: 100%;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -48%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
 }

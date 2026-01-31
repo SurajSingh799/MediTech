@@ -60,8 +60,8 @@ h2 {
 
 .close-button {
   position: absolute;
-  top: -8px;
-  right: 0;
+  top: 10px;
+  right: 10px;
   background: none;
   border: none;
   font-size: 1.2rem;
@@ -137,9 +137,10 @@ input::placeholder {
 }
 
 .remember-me label {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 6px;
+  white-space: nowrap;
   cursor: pointer;
 }
 
@@ -424,4 +425,44 @@ input::placeholder {
 /* Material Overrides */
 ::ng-deep .mat-icon {
   overflow: visible;
+}
+
+
+
+
+.close-button {
+  position: absolute;
+  /* Shifted inside the container padding */
+  top: 8px; 
+  right: 8px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 10; /* Ensure it stays above other elements */
+  color: #adb5bd; /* Subtle gray */
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.close-button:hover {
+  color: #495057; /* Darker gray on hover */
+  transform: scale(1.1);
+}
+
+.close-button mat-icon {
+  font-size: 24px; /* Standardize icon size */
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* --- Responsive Adjustments --- */
+
+@media (min-width: 600px) {
+  .close-button {
+    /* Positioned relative to the white card box */
+    top: 16px;
+    right: 16px;
+  }
 }

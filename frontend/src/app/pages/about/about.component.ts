@@ -3,15 +3,17 @@ import { CommonModule } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
+import { SignUpComponent } from '../signup/signup.component';
 
 @Component({
   selector: 'app-about',
   templateUrl: './about.component.html',
-  imports: [CommonModule, MatIcon, MatButtonModule, RouterLink],
+  imports: [CommonModule, MatIcon, MatButtonModule, RouterLink,SignUpComponent],
   styleUrls: ['./about.component.css'],
   standalone: true
 })
 export class AboutComponent {
+  showSignup = false;
   values = [
     {
       icon: 'security',
@@ -61,4 +63,18 @@ export class AboutComponent {
       description: 'Basic reporting and insights to help track patient data trends'
     }
   ];
+   toggleSignup(): void {
+    this.showSignup = true;
+    document.body.style.overflow = 'hidden';
+  }
+
+  CloseSignup(): void {
+    this.showSignup = false;
+    document.body.style.overflow = 'auto';
+  }
+
+  closeAllModals(): void {
+    this.showSignup = false;
+    document.body.style.overflow = 'auto';
+  }
 }

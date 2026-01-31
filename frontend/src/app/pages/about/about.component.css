@@ -817,3 +817,67 @@
   background-color: #ffa500 !important;
   transform: translateY(-2px);
 }
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  z-index: 999;
+  animation: fadeIn 0.3s ease;
+}
+
+/* Modal Container */
+.modal-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  width: 90%;              /* ← THIS IS THE PROBLEM */
+  max-width: 450px;        /* ← THIS TOO */
+  background: white;        /* ← AND THIS */
+  border-radius: 12px;      /* ← AND THIS */
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3); 
+}
+
+/* Ensure the signup component inside takes full width */
+.modal-container app-signup {
+  display: block;
+  width: 100%;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -48%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .modal-container {
+    min-width: 90vw;
+    max-width: 90vw;
+    margin: 0 5vw;
+  }
+}
+
+/* When signup/login is full page, disable modal blur */
+.modal-overlay {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}

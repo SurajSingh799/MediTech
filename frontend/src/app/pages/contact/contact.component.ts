@@ -52,7 +52,7 @@ export class ContactComponent {
       // Clear success message after 5 seconds
       setTimeout(() => {
         this.submitMessage = '';
-      }, 5000);
+      }, 10000);
 
       // TODO: Replace with actual API call
       // this.contactService.sendMessage(this.formData).subscribe(

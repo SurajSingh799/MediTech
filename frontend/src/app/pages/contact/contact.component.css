@@ -66,6 +66,62 @@
   margin-bottom: 24px;
 }
 
+/* ===== SUCCESS/ERROR MESSAGE ALERT ===== */
+.submit-alert {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  animation: slideInDown 0.4s ease-out;
+}
+
+.submit-alert.success {
+  background: #e8f5e9;
+  border: 1px solid #26b382;
+  color: #1b5e20;
+}
+
+.submit-alert:not(.success) {
+  background: #ffebee;
+  border: 1px solid #e91e63;
+  color: #c62828;
+}
+
+.submit-alert mat-icon {
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.submit-alert.success mat-icon {
+  color: #26b382;
+}
+
+.submit-alert:not(.success) mat-icon {
+  color: #e91e63;
+}
+
+.submit-alert p {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* Form Styles */
 .contact-form {
   display: flex;
@@ -159,6 +215,20 @@
   height: 20px;
 }
 
+/* Loading Spinner */
+.btn-submit .spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /* Privacy Notice */
 .form-privacy {
   display: flex;
@@ -230,6 +300,27 @@
   height: 32px;
   color: white;
 }
+
+/* ===== MEDITECH M LOGO ===== */
+.meditech-logo {
+  width: 64px;
+  height: 64px;
+  background: white;
+  border-radius: 50%;
+  object-fit: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  font-weight: 800;
+  color: #0087c8;
+  font-family: 'Arial', sans-serif;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  margin: 0 auto 16px;
+  transition: transform 0.3s ease;
+}
+
+
 
 .cta-card p {
   font-size: 0.95rem;

@@ -1,5 +1,14 @@
 <div class="services-container">
   
+  <div class="modal-overlay" *ngIf="showSignup" (click)="closeAllModals()"></div>
+
+  <!-- Signup Component with modal styling -->
+  <div class="modal-container" *ngIf="showSignup">
+    <app-signup 
+      (closeSignup)="closeSignup()">
+    </app-signup>
+  </div>
+
   <!-- HERO SECTION -->
   <section class="services-hero">
     <div class="hero-wrapper">
@@ -9,8 +18,8 @@
         <p>Comprehensive healthcare data management solutions designed for modern medical practices and healthcare providers.</p>
         
         <div class="hero-buttons">
-          <button class="btn-primary">Get Started</button>
-          <button class="btn-secondary">Learn More</button>
+          <button class="btn-primary" (click)="toggleSignup()">Get Started</button>
+          <button class="btn-secondary" routerLink="/contact">Contact Us</button>
         </div>
       </div>
 
@@ -65,16 +74,5 @@
     </div>
   </section>
 
-  <!-- CTA SECTION -->
-  <section class="services-cta">
-    <div class="cta-content">
-      <h2>Ready to Get Started?</h2>
-      <p>Experience secure and efficient healthcare data management tailored to your needs</p>
-      <div class="cta-buttons">
-        <button class="btn-primary">Request Demo</button>
-        <button class="btn-secondary">Contact Us</button>
-      </div>
-    </div>
-  </section>
 
 </div>

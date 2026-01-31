@@ -24,13 +24,19 @@ import { DocumentComponent } from './pages/document/document.component';
 import { ServicesComponent } from './pages/service/service.component';
 import { AboutComponent } from './pages/about/about.component';
 import { ContactComponent } from './pages/contact/contact.component';
+import { SharedLayoutComponent } from './layouts/landing page/landing.component';
 
-export const routes: Routes = [{ path: '', component: LandingPageComponent },
+export const routes: Routes = [
+{path:'',component:SharedLayoutComponent,
+  children:[
+{ path: '', component: LandingPageComponent },
 { path: 'login', component: LoginComponent },
 { path: 'register', component: SignUpComponent},
-{ path: 'services', component: ServicesComponent },
+{ path: 'service', component: ServicesComponent },
 { path: 'about', component: AboutComponent },
 { path: 'contact', component: ContactComponent },
+  ]
+},
 {
   path: 'dashboard',
   component: DashboardLayoutComponent,

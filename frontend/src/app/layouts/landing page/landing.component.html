@@ -1,0 +1,112 @@
+<header>
+  <mat-toolbar class="navbar" color="primary">
+    <!-- Left: Logo & Name -->
+    <div class="header" (click)="navigateToHome()" style="cursor: pointer;">
+      <div class="logo-container"></div>
+      <h1 class="site-name">Meditech</h1>
+    </div>
+    
+    <!-- Hamburger Menu Icon (Mobile Only) -->
+    <button class="hamburger-menu" (click)="toggleMobileMenu()" aria-label="Toggle menu">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
+    
+    <!-- Middle Navigation Links -->
+    <div class="nav-links" [class.mobile-menu-open]="isMobileMenuOpen">
+      <a *ngFor="let link of navLinks" 
+         mat-button 
+         [routerLink]="link.path" 
+         routerLinkActive="active" 
+         [routerLinkActiveOptions]="{ exact: link.exact }" 
+         (click)="closeMobileMenu()">
+        {{ link.label }}
+      </a>
+      
+      <!-- Mobile Auth Buttons (inside nav menu) -->
+      <div class="mobile-auth-buttons">
+        <button mat-stroked-button color="primary" (click)="toggleLogin()" class="login-button">Login</button>
+        <button mat-raised-button color="primary" (click)="toggleSignup()" class="signup-button">Sign Up</button>
+      </div>
+    </div>
+
+    <!-- Right: Login & Sign Up (Desktop Only) -->
+    <div class="auth-buttons desktop-auth">
+      <button mat-stroked-button color="primary" (click)="toggleLogin()" class="login-button">Login</button>
+      <button mat-raised-button color="primary" (click)="toggleSignup()" class="signup-button">Sign Up</button>  
+    </div>
+  </mat-toolbar>
+</header>
+
+<div class="modal-overlay" *ngIf="showLogin || showSignup" (click)="closeAllModals()"></div>
+
+  <!-- Login Component with modal styling -->
+  <div class="modal-container" *ngIf="showLogin">
+    <app-login 
+      (closeLogin)="CloseLogin()" 
+      (switchToSignup)="SwitchToSignup()">
+    </app-login>
+  </div>
+
+  <!-- Signup Component with modal styling -->
+  <div class="modal-container" *ngIf="showSignup">
+    <app-signup 
+      (closeSignup)="CloseSignup()" 
+      (switchToLogin)="SwitchToLogin()">
+    </app-signup>
+  </div>
+
+<main class="content-area">
+  <router-outlet></router-outlet>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-logo">
+        <div class="logo">
+          <span class="logo-circle">M</span>
+          <span class="logo-text">MediTech</span>
+        </div>
+        <p>Secure healthcare data management with privacy-first design and compliance-ready architecture.</p>
+      </div>
+
+      <div class="footer-links">
+        <div class="footer-column">
+          <h4>Platform</h4>
+          <ul>
+            <li><a routerLink="/">How it Works</a></li>
+            <li><a href="#">Security</a></li>
+            <li><a href="#">Data Privacy</a></li>
+            <li><a href="#">Audit Logs</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="#">Help Center</a></li>
+            <li><a routerLink="/contact">Contact Us</a></li>
+            <li><a href="#">FAQs</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column footer-newsletter">
+          <h4>Stay Updated</h4>
+          <p>Subscribe to our newsletter for the latest updates.</p>
+          <div class="newsletter-form">
+            <input type="email" class="email-input" placeholder="Your email" [(ngModel)]="email" name="email" required>
+            <button class="btn btn-subscribe" (click)="subscribe()" [disabled]="!email">Subscribe</button>
+          </div>
+          <small *ngIf="message" class="subscribe-msg">{{ message }}</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2025 MediTech. All rights reserved.</p>
+    </div>
+  </div>
+</footer>

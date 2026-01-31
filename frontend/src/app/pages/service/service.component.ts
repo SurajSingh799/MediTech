@@ -2,15 +2,18 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
+import { RouterLink } from '@angular/router';
+import { SignUpComponent } from '../signup/signup.component';
 
 @Component({
   selector: 'app-services',
   standalone: true,
-  imports: [CommonModule, MatIconModule],
+  imports: [CommonModule, MatIconModule,RouterLink ,SignUpComponent],
   templateUrl: './service.component.html',
   styleUrls: ['./service.component.css']
 })
 export class ServicesComponent {
+  showSignup = false;
   services = [
     {
       title: 'Electronic Medical Records',
@@ -79,4 +82,16 @@ export class ServicesComponent {
       ]
     }
   ];
+  toggleSignup(): void {
+    this.showSignup = true;
+    document.body.style.overflow = 'hidden';
+  }
+  closeSignup(): void {
+    this.showSignup = false;
+    document.body.style.overflow = 'auto'; // Restores scrolling
+  }
+  closeAllModals(): void {
+    this.showSignup = false;
+    document.body.style.overflow = 'auto';
+  }
 }

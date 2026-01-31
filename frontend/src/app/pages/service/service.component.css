@@ -55,6 +55,7 @@
   font-weight: 700;
   margin-bottom: 12px;
   line-height: 1.25;
+  z-index: 10;
 }
 
 .hero-content h1 .highlight {
@@ -578,32 +579,32 @@
     transform: scaleX(1);
   }
 
-  .service-icon.medical ~ h3 ~ .service-description ~ .feature-list,
+  .service-icon.medical ~ h3 ~ .service-description ~ 
   .service-card:has(.service-icon.medical)::before {
     background: linear-gradient(90deg, #0087c8, #00a8e8);
   }
 
-  .service-icon.security ~ h3 ~ .service-description ~ .feature-list,
+  .service-icon.security ~ h3 ~ .service-description ~ 
   .service-card:has(.service-icon.security)::before {
     background: linear-gradient(90deg, #ffb818, #ffd43b);
   }
 
-  .service-icon.analytics ~ h3 ~ .service-description ~ .feature-list,
+  .service-icon.analytics ~ h3 ~ .service-description ~ 
   .service-card:has(.service-icon.analytics)::before {
     background: linear-gradient(90deg, #26b382, #2dd4a4);
   }
 
-  .service-icon.integration ~ h3 ~ .service-description ~ .feature-list,
+  .service-icon.integration ~ h3 ~ .service-description ~ 
   .service-card:has(.service-icon.integration)::before {
     background: linear-gradient(90deg, #9c27b0, #ba68c8);
   }
 
-  .service-icon.support ~ h3 ~ .service-description ~ .feature-list,
+  .service-icon.support ~ h3 ~ .service-description ~ 
   .service-card:has(.service-icon.support)::before {
     background: linear-gradient(90deg, #e91e63, #ec407a);
   }
 
-  .service-icon.compliance ~ h3 ~ .service-description ~ .feature-list,
+  .service-icon.compliance ~ h3 ~ .service-description ~
   .service-card:has(.service-icon.compliance)::before {
     background: linear-gradient(90deg, #009688, #26a69a);
   }
@@ -723,4 +724,68 @@
 
 ::ng-deep .mat-button-focus-overlay {
   background: transparent !important;
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  z-index: 999;
+  animation: fadeIn 0.3s ease;
+}
+
+/* Modal Container */
+.modal-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  width: 90%;              /* ← THIS IS THE PROBLEM */
+  max-width: 450px;        /* ← THIS TOO */
+  background: white;        /* ← AND THIS */
+  border-radius: 12px;      /* ← AND THIS */
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3); 
+}
+
+/* Ensure the signup component inside takes full width */
+.modal-container app-signup {
+  display: block;
+  width: 100%;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -48%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .modal-container {
+    min-width: 90vw;
+    max-width: 90vw;
+    margin: 0 5vw;
+  }
+}
+
+/* When signup/login is full page, disable modal blur */
+.modal-overlay {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }

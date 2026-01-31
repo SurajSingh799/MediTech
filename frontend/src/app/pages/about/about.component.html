@@ -1,4 +1,13 @@
 <div class="about-container">
+  <!-- Modal Overlay for blur effect -->
+  <div class="modal-overlay" *ngIf="showSignup" (click)="closeAllModals()"></div>
+
+  <!-- Signup Component with modal styling -->
+  <div class="modal-container" *ngIf="showSignup">
+    <app-signup 
+      (closeSignup)="CloseSignup()">
+    </app-signup>
+  </div>
   <!-- Hero Section - Option 3 Split Layout -->
   <section class="about-hero">
     <div class="hero-bg">
@@ -12,8 +21,8 @@
           <h1>Healthcare Data, <span class="highlight">Simplified.</span></h1>
           <p>We build secure, compliant solutions that help medical professionals focus on what matters most — patient care.</p>
           <div class="hero-buttons">
-            <button mat-raised-button class="started" color="accent" routerLink="/contact">Get Started</button>
-            <button mat-stroked-button class="services" routerLink="/services">Our Services</button>
+            <button mat-raised-button class="started" color="accent" (click)="toggleSignup()">Get Started</button>
+            <button mat-stroked-button class="services" routerLink="/service">Our Services</button>
           </div>
         </div>
         <div class="hero-visual">
@@ -78,17 +87,5 @@
     </div>
   </section>
 
-  <!-- CTA Section -->
-  <section class="about-cta">
-    <div class="container">
-      <div class="cta-content">
-        <h2>Interested in Learning More?</h2>
-        <p>We'd be happy to show you how MediTech can work for your practice</p>
-        <div class="cta-buttons">
-          <button mat-raised-button class="started" color="accent" routerLink="/contact">Contact Us</button>
-          <button mat-stroked-button class="services" routerLink="/services">View Services</button>
-        </div>
-      </div>
-    </div>
-  </section>
+ 
 </div>
