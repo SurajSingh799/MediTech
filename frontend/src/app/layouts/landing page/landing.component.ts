@@ -28,7 +28,9 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class SharedLayoutComponent {
   // --- Header Properties & Logic ---
-  @Input() isMobileMenuOpen = false;
+  // FIXED: Made this a local property instead of @Input()
+  isMobileMenuOpen = false;
+  
   @Output() loginClicked = new EventEmitter<void>();
   @Output() signupClicked = new EventEmitter<void>();
   @Output() mobileMenuToggled = new EventEmitter<void>();
@@ -39,6 +41,7 @@ export class SharedLayoutComponent {
     { label: 'About Us', path: '/about', exact: false },
     { label: 'Contact Us', path: '/contact', exact: false }
   ];
+  
   // Modal states
   showLogin = false;
   showSignup = false;
@@ -56,7 +59,10 @@ export class SharedLayoutComponent {
     this.closeMobileMenu();
   }
 
+  // FIXED: Properly toggle the menu state
   toggleMobileMenu(): void {
+    this.isMobileMenuOpen = !this.isMobileMenuOpen;
+    console.log('Mobile menu toggled:', this.isMobileMenuOpen); // Debug log
     this.mobileMenuToggled.emit();
   }
 
@@ -70,12 +76,14 @@ export class SharedLayoutComponent {
   toggleLogin(): void {
     this.showLogin = true;
     this.showSignup = false;
+    this.closeMobileMenu(); // Close mobile menu when opening modal
     document.body.style.overflow = 'hidden';
   }
 
   toggleSignup(): void {
     this.showSignup = true;
     this.showLogin = false;
+    this.closeMobileMenu(); // Close mobile menu when opening modal
     document.body.style.overflow = 'hidden';
   }
 

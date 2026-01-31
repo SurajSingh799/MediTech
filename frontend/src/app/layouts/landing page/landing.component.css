@@ -1,6 +1,5 @@
 /* ============================================
-   HEADER COMPONENT - CONSISTENT NAVBAR
-   Mobile-first responsive design
+   HEADER COMPONENT - MOBILE MENU FIX
    ============================================ */
 
 /* ===== NAVBAR (MOBILE) ===== */
@@ -48,7 +47,7 @@
   margin: 0;
 }
 
-/* Hamburger Menu (Mobile/Tablet Only - Hidden on Desktop) */
+/* Hamburger Menu (Mobile/Tablet Only) */
 .hamburger-menu {
   display: flex;
   flex-direction: column;
@@ -59,7 +58,8 @@
   border: none;
   cursor: pointer;
   padding: 0;
-  z-index: 1001;
+  z-index: 1500;
+  position: relative;
 }
 
 .hamburger-line {
@@ -70,11 +70,11 @@
   transition: all 0.3s ease;
 }
 
-/* Mobile Navigation Links */
+/* Mobile Navigation Links - FIXED */
 .nav-links {
   position: fixed;
   top: 56px;
-  left: -100%;
+  left: 0;
   width: 100%;
   height: calc(100vh - 56px);
   background: linear-gradient(135deg, #0087c8 0%, #004c70 100%);
@@ -82,13 +82,15 @@
   flex-direction: column;
   padding: 20px;
   gap: 0;
-  transition: left 0.3s ease;
+  transition: transform 0.3s ease;
+  transform: translateX(-100%);
   overflow-y: auto;
-  z-index: 999;
+  z-index: 1400;
 }
 
+/* When menu is open */
 .nav-links.mobile-menu-open {
-  left: 0;
+  transform: translateX(0);
 }
 
 .nav-links a {
@@ -130,6 +132,8 @@
 }
 
 .mobile-auth-buttons .signup-button {
+  background-color: #ffb818 !important;
+  color: #0a2540 !important;
   border-radius: 20px;
 }
 
@@ -138,6 +142,7 @@
   display: none;
 }
 
+/* Base button styles */
 .login-button, .signup-button {
   padding: 0 12px;
   height: 32px;
@@ -221,7 +226,7 @@
     gap: 16px;
     flex: 1;
     justify-content: center;
-    left: 0;
+    transform: translateX(0);
     overflow-y: visible;
   }
 
@@ -277,7 +282,9 @@
     font-size: 1.5rem;
   }
 
-  .login-button, .signup-button {
+  /* RESTORED: Original desktop button sizes */
+  .auth-buttons.desktop-auth .login-button,
+  .auth-buttons.desktop-auth .signup-button {
     padding: 0 24px;
     height: 40px;
     font-weight: 500;
@@ -285,24 +292,24 @@
     border-radius: 20px;
   }
 
-  .login-button {
+  .auth-buttons.desktop-auth .login-button {
     background: transparent;
     color: white;
     border: 2px solid white;
   }
 
-  .login-button:hover {
+  .auth-buttons.desktop-auth .login-button:hover {
     background-color: rgba(255, 255, 255, 0.1);
   }
 
-  .signup-button {
-    background: #ffb818;
-    color: #0a2540;
+  .auth-buttons.desktop-auth .signup-button {
+    background: #ffb818 !important;
+    color: #0a2540 !important;
     border: none;
   }
 
-  .signup-button:hover {
-    background-color: #ffa500;
+  .auth-buttons.desktop-auth .signup-button:hover {
+    background-color: #ffa500 !important;
     transform: translateY(-2px);
   }
 }
@@ -321,11 +328,9 @@
 }
 
 /* ============================================
-   FOOTER COMPONENT - CONSISTENT FOOTER
-   Mobile-first responsive design
+   FOOTER COMPONENT
    ============================================ */
 
-/* ===== FOOTER (MOBILE) ===== */
 .footer {
   background: #0a2540;
   color: white;
@@ -376,7 +381,6 @@
   line-height: 1.7;
 }
 
-/* Mobile Footer: Platform left, Support right */
 .footer-links {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -410,7 +414,6 @@
   color: white;
 }
 
-/* Newsletter spans full width on mobile */
 .footer-newsletter {
   grid-column: 1 / -1;
 }
@@ -470,13 +473,11 @@
   color: rgba(255, 255, 255, 0.5);
 }
 
-/* ===== TABLET: 600px+ ===== */
 @media (min-width: 600px) {
   .footer {
     padding: 50px 20px 16px;
   }
 
-  /* Tablet footer: 3 columns */
   .footer-links {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -486,7 +487,6 @@
   }
 }
 
-/* ===== DESKTOP: 992px+ ===== */
 @media (min-width: 992px) {
   .footer-content {
     flex-direction: row;
@@ -517,37 +517,73 @@
   }
 }
 
-/* --- THE FIX: Modal Overlay Positioning --- */
+/* ============================================
+   MODAL STYLES - FIXED Z-INDEX
+   ============================================ */
 
-/* Ensures the dimmed background covers the entire screen without moving content */
 .modal-overlay {
-  position: fixed !important;
+  position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(4px);
-  z-index: 2000; /* Higher than navbar z-index (1000) */
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  z-index: 3000;
+  animation: fadeIn 0.3s ease;
 }
 
-/* Centers the Login/Signup box exactly in the middle of the screen */
 .modal-container {
-  position: fixed !important;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 2001; /* Higher than overlay */
-  width: 90%;
-  max-width: 450px;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  z-index: 3001;
+  width: 90%;              /* ← THIS IS THE PROBLEM */
+  max-width: 450px;        /* ← THIS TOO */
+  background: white;        /* ← AND THIS */
+  border-radius: 12px;      /* ← AND THIS */
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3); 
 }
 
-/* Ensures content area expands to fill space between header and footer */
+app-login, app-signup {
+  display: block;
+  width: 100%;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -48%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
 .content-area {
-  min-height: 60vh; /* Prevents footer from jumping up on short pages */
+  min-height: calc(100vh - 56px);
   position: relative;
+  width: 100%;
+  overflow-x: hidden;
   z-index: 1;
 }
+
+@media (min-width: 600px) {
+  .content-area {
+    min-height: calc(100vh - 60px);
+  }
+}
+
+@media (min-width: 992px) {
+  .content-area {
+    min-height: calc(100vh - 70px);
+  }
+}
+
