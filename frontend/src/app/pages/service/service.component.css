@@ -789,3 +789,29 @@
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
 }
+
+
+/* Responsive adjustments for mobile - Only change this part */
+@media (max-width: 768px) {
+  .modal-container {
+    /* Position relative to the screen */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    
+    /* Move it back by half its own width/height to center it */
+    transform: translate(-50%, -50%);
+    
+    /* Responsive width */
+    width: 90vw; 
+    max-width: 400px; /* Adjust based on your preferred form width */
+    margin: 0; 
+    
+    /* Height protection for small screens */
+    max-height: 90vh;
+    overflow-y: auto;
+    
+    /* Optional: Ensure padding is consistent with image 1 */
+    padding: 24px 16px; 
+  }
+}
