@@ -815,3 +815,41 @@
     padding: 24px 16px; 
   }
 }
+
+/* --- 1. Update the Mobile View (Base Styles) --- */
+.feature-list li {
+  display: flex;
+  align-items: flex-start; /* Changed from center to flex-start for multi-line text */
+  font-size: 0.8rem;
+  color: #475569;
+  line-height: 1.4;       /* Ensures text aligns nicely with the icon */
+}
+
+.feature-list .check-icon {
+  font-size: 16px;       /* Slightly larger for better visibility */
+  width: 16px;
+  height: 16px;
+  min-width: 16px;       /* STOPS THE ICON FROM SHRINKING/CUTTING OFF */
+  color: #26b382;
+  margin-right: 8px;     /* Increased spacing */
+  margin-top: 2px;       /* Aligns icon with the first line of text */
+}
+
+/* --- 2. Update the Tablet/Desktop View (Inside @media (min-width: 600px)) --- */
+@media (min-width: 600px) {
+  /* ... existing styles ... */
+  .feature-list li {
+    width: 100%;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: flex-start; /* Keep flex-start for consistency */
+  }
+
+  .feature-list .check-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    min-width: 18px;       /* CRITICAL FIX */
+    margin-right: 10px;
+  }
+}

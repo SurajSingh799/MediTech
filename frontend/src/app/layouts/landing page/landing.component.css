@@ -587,3 +587,16 @@ app-login, app-signup {
   }
 }
 
+.logo-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  /* Change background to white and text color to blue */
+  background-color: white; 
+  color: #0087c8;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
